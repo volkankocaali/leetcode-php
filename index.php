@@ -88,3 +88,34 @@ function longestCommonPrefix(array $strs): string
 }
 
 // longestCommonPrefix(["flower","flow","flight"])
+
+
+function isValid($s): bool
+{
+    if(strlen($s) == 1) return false;
+
+    if (strlen($s) % 2 == 1) return false;
+
+    $openArray = ["(" , "[" , "{"];
+    $closeArray = [")", "]", "}"];
+
+    $split = str_split($s);
+
+    $tempArray = [];
+
+    foreach ($split as $value) {
+        $search = array_search($value, $openArray);
+
+        if($search !== false){
+            $tempArray[] = $closeArray["$search"];
+        }else {
+            if (!count($tempArray)) return false;
+
+            $pop = array_pop($tempArray);
+            if ($pop != $value) return false;
+        }
+    }
+    if (count($tempArray) == 0 )return true; else return false;
+}
+
+// isValid("(())");
